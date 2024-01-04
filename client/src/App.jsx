@@ -24,6 +24,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SignIn />} />
+        <Route  path="/message" element={<Message/>} />
         <Route path="/share/:id" element={<Share/>}/>
         <Route path="/register" element={<SignUp />} />
 
@@ -45,7 +46,7 @@ const App = () => {
           <Route index path="allpost" element={<AllPost details={details}/>} />
           <Route  path="vdocall" element={<Videocall/>} />
           <Route  path="audio" element={<AudioChat/>} />
-          <Route  path="message" element={<Message/>} />
+         
          
 
         </Route>

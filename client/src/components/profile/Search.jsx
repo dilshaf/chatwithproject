@@ -52,7 +52,7 @@ const Search = () => {
 
   //   console.log(formData,'dataaaaaaaaaaaa');
   //   try {
-  //     const response = await axios.post("http://localhost:5000/api/posts/search",data );
+  //     const response = await axios.post("http://localhost:7000/api/posts/search",data );
 
   //     console.log(response, "responsekkijsjbj");
   //     if (response.data) {
@@ -79,7 +79,7 @@ const Search = () => {
   
     console.log(data, 'dataaaaaaaaaaaa'); // Log the 'data' variable instead of 'formData'
     try {
-      const response = await axios.post("http://localhost:5000/api/posts/search", data);
+      const response = await axios.post("http://localhost:7000/api/posts/search", data);
   
       console.log(response, "responsekkijsjbj");
       if (response && response.data) {
@@ -143,7 +143,7 @@ const Search = () => {
         <div className="post-header">
           <img
             className="post-avatar"
-            src={`http://localhost:5000/uploads/${details.image}`}
+            src={`http://localhost:7000/uploads/${details.image}`}
             alt="User Avatar"
           />
           <div className="post-user-info">

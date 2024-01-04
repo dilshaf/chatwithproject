@@ -3,7 +3,7 @@ import { FacebookShareButton, TwitterShareButton, WhatsappShareButton, EmailShar
 import { FaFacebook, FaTwitter, FaWhatsapp, FaEnvelope } from 'react-icons/fa';
 import './Share.css'
 const Share = () => {
-  const shareUrl = `http://localhost:5000/api/posts/get/${localStorage.getItem("id")}`; // Replace with your actual URL
+  const shareUrl = `http://localhost:7000/api/posts/get/${localStorage.getItem("id")}`; // Replace with your actual URL
   // const shareText = "Check out this amazing content!"; // Replace with your actual share text
 
   return (

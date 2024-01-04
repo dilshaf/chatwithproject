@@ -306,11 +306,13 @@ function NavScrollExample() {
             <NavLink to={'posts'}>Posts</NavLink>
             <NavLink to={'settings'}>Profile</NavLink>
              <NavLink to={'allpost'}>AllPost</NavLink>
+            
              {/* <NavLink to={'/'} >Sign Out</NavLink> */}
           </Nav>
           <Form className="d-flex">
           {/* <Link   to={'/'}><Button variant="outline-success">Sign Out</Button></Link> */}
           <Link   to={'/'}><button class="bn632-hover bn20">SignOut</button></Link>
+          <Link to={'/message'}><button class="btn">Message</button></Link>
           <Link   to={'settings'}><button class="bn632-hover bn20">Settings</button></Link>
             {/* <Link   to={'settings'}><Button variant="outline-success">Settings</Button></Link> */}
           </Form>

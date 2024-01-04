@@ -8,9 +8,9 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
   const [refresh,setRefresh] = useState(true)
+  const [itSelfUser,setItSelfUser] = useState({})
   const [selectedPost, setSelectedPost] = useState(null)
   
-  // const id = localStorage.getItem("id")
 
     const refreshUseEffectMethod = ()=>{
       setRefresh(!refresh)
@@ -18,8 +18,12 @@ const AuthProvider = ({ children }) => {
 
     const handlePostClick = (post) => {
       setSelectedPost(post);
-      console.log(post,'postsee');
     };
+    const GetUser = (user) => {
+      // console.log(user,'user')
+      setItSelfUser(user);
+    };
+    
 
     // const getUserById = ()=>{
     //   console.log('daaa');
@@ -34,6 +38,8 @@ const AuthProvider = ({ children }) => {
       // getUserById,
       refreshUseEffectMethod,
       refresh,
+      GetUser,
+      itSelfUser,
       adminData:true,
     }
 

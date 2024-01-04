@@ -32,7 +32,7 @@ const {id}=useParams()
 
   // const handleUpdateComment = async (postid,commentid) => {
   //   try {
-  //     const response = await axios.put(`http://localhost:5000/api/posts/${localStorage.getItem("id")}`, {
+  //     const response = await axios.put(`http://localhost:7000/api/posts/${localStorage.getItem("id")}`, {
   //       postid: postid,
   //       commentid: commentid,
   //       text: text,
@@ -66,7 +66,7 @@ const {id}=useParams()
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/posts/like",
+        "http://localhost:7000/api/posts/like",
         { userid, postid }
       );
 
@@ -86,7 +86,7 @@ const {id}=useParams()
         return;
       }
       let response = await axios.post(
-        "http://localhost:5000/api/posts/comment",
+        "http://localhost:7000/api/posts/comment",
         { userid, text: commentText, postid }
 
       );
@@ -106,7 +106,7 @@ const {id}=useParams()
   //       return
   //     }
 
-  //     let response=await axios.post("http://localhost:5000/api/posts/addfriend",{userid,username:friend,postid})
+  //     let response=await axios.post("http://localhost:7000/api/posts/addfriend",{userid,username:friend,postid})
   //     console.log(response.friends,'friendres');
   //   } catch (error) {
   //     console.log(error.message);
@@ -121,7 +121,7 @@ const {id}=useParams()
 
   // const getAllPosts = async () => {
   //   try {
-  //     let response = await axios.get("http://localhost:5000/api/posts/get");
+  //     let response = await axios.get("http://localhost:7000/api/posts/get");
   //     console.log(response, "getallpost");
   //     const publicPosts = response.data.filter(post => post.privacy === "public");
   //     setDetails(publicPosts);
@@ -133,7 +133,7 @@ const {id}=useParams()
 
   // const getAllPosts = async () => {
   //   try {
-  //     const response = await axios.get("http://localhost:5000/api/posts/get");
+  //     const response = await axios.get("http://localhost:7000/api/posts/get");
   //     console.log(response, "getallpost");
   
   //     if (response && response.data) {
@@ -149,7 +149,7 @@ const {id}=useParams()
 
   const getAllPosts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/posts/get");
+      const response = await axios.get("http://localhost:7000/api/posts/get");
       console.log(response, "getallpost");
   
       if (response && response.data) {
@@ -189,7 +189,7 @@ const {id}=useParams()
         console.log("user not found");
       }
       let response = await axios.post(
-        "http://localhost:5000/api/posts/addfriend",
+        "http://localhost:7000/api/posts/addfriend",
         {
           userId,
           friendId,
@@ -220,7 +220,7 @@ const {id}=useParams()
               <div style={{ display: "flex", gap: "20rem" }}>
                 <div className="flex items-center mb-4">
                   <img
-                    src={`http://localhost:5000/uploads/${items.profilepic}`}
+                    src={`http://localhost:7000/uploads/${items.profilepic}`}
                     alt="Profile Image"
                     className="w-10 h-10 rounded-full mr-4"
                     onClick={() => handlePostClick(items)}
@@ -264,7 +264,7 @@ const {id}=useParams()
               </div>
 
               <img
-                src={`http://localhost:5000/uploads/${items.image}`}
+                src={`http://localhost:7000/uploads/${items.image}`}
                 alt="Post Image"
                 className="mb-4 rounded-lg w-full"
               />
@@ -346,7 +346,7 @@ const {id}=useParams()
                     return (
                       <>
                         <img
-                          src={`http://localhost:5000/uploads/${item.image}`}
+                          src={`http://localhost:7000/uploads/${item.image}`}
                           alt="Profile Image"
                           className="w-10 h-10 rounded-full mr-4"
                         />{" "}
@@ -388,7 +388,7 @@ const {id}=useParams()
        
            
             <div class="flex space-x-4 mb-4" style={{marginTop:"4rem"}}>
-                <img src={`http://localhost:5000/uploads/${item.image}`} alt="Profile Pic" class="w-10 h-10 rounded-full"/>
+                <img src={`http://localhost:7000/uploads/${item.image}`} alt="Profile Pic" class="w-10 h-10 rounded-full"/>
                 <div>
                 
   <h3 class="font-semibold">
@@ -432,7 +432,7 @@ const {id}=useParams()
      <div class="bg-white p-4 rounded-md shadow-md">
           
           <div class="flex space-x-4 mb-4">
-              {/* <img src={`http://localhost:5000/uploads/${items.profilepic}`} alt="Your Profile Pic" class="w-10 h-10 rounded-full"/> */}
+              {/* <img src={`http://localhost:7000/uploads/${items.profilepic}`} alt="Your Profile Pic" class="w-10 h-10 rounded-full"/> */}
               <input type="text" placeholder="Add your comment..."  value={commentText}
                     onChange={commentFunction} class="w-full border border-gray-300 p-2 rounded-md"/>  <SendIcon
                     onClick={() => handleCommentSubmit(items._id)}

@@ -1,138 +1,157 @@
-import React, { useRef, useState } from 'react';
-// import './Message.css';
+import React, { useRef, useState } from "react";
+import LogoSearch from "../profile/LogoSearch"
+import { useEffect } from "react";
+import { userChats } from "./Chatrequest";
+import ChatBox from "./ChatBox";
+import { io } from "socket.io-client";
+import { getUserById } from "../../services/apiService";
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
-import 'firebase/compat/analytics';
+const Message = () => {
+  const socket = useRef();
+  const [chats, setChats] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+const [chatUser,setChatUsers] = useState([])
 
-// ... rest of your code
+  const [sendMessage, setSendMessage] = useState(null);
+  const [receivedMessage, setReceivedMessage] = useState(null);
+  const user=localStorage.getItem("id")
 
-// import firebase from 'firebase/app';
-// import 'firebase/firestore';
-// import 'firebase/auth';
-// import 'firebase/analytics';
+const [userObject,setUserObject] = useState({})
+  // Get the chat in chat section
+  useEffect(() => {
+    socket.current = io("http://localhost:8800");
 
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+    const getChats = async () => {
+      try {
+        const { data } = await userChats(user);
+       
+      
+        setChats(data);
+        
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getChats();
 
-firebase.initializeApp({
- apiKey: "AIzaSyAIoQCcDStvgQXFRy0rIsM0ufphxMv0Hhg",
-authDomain: "chat-app-c271b.firebaseapp.com",
-projectId: "chat-app-c271b",
-storageBucket: "chat-app-c271b.appspot.com",
-messagingSenderId: "654827030343",
-appId: "1:654827030343:web:7a973d8c92bdbcc0adee62",
-measurementId: "G-XL7PMD980T"
-})
+    const fetchUser = async()=>{
+     const response = await getUserById();
+     setUserObject(response)
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
-const analytics = firebase.analytics();
+    }
+    fetchUser()
+  }, [user]);
+
+ 
+
+  // Connect to Socket.io
+  useEffect(() => {
+    socket.current = io("http://localhost:8800");
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+      console.log(onlineUsers,'onlineUsers');
+    });
+    socket.current.emit("connect_friends",user,(data)=>{
+      console.log(data,'dataaaaaaaaaaaaaaaaaa');
+    
+      setChatUsers(data)
+    });
+
+  }, [user]);
+
+  // Send Message to socket server
+  useEffect(() => {
+    if (sendMessage!==null) {
+      socket.current.emit("send-message", sendMessage);}
+  }, [sendMessage]);
 
 
-function App() {
+  // Get the message from socket server
+  useEffect(() => {
+    socket.current.on("recieve-message", (data) => {
+      setReceivedMessage(data);
+    }
 
-  const [user] = useAuthState(auth);
+    );
+  }, []);
 
-  return (
-    <div className="Message">
-      <header>
-       <h1>Chat and connect with others</h1>
-        <SignOut />
-      </header>
 
-      <section>
-        {user ? <ChatRoom /> : <SignIn />}
-      </section>
+  // const checkOnlineStatus = (chat) => {
+  //   const chatMember = chat.members.find((member) => member !== user);
+  //   const online = onlineUsers.find((user) => user.userId === chatMember);
+  //   return online ? true : false;
+  // };
 
-    </div>
-  );
-}
+  const handleUserByChat = async(id)=>{
+   
+    socket.current.emit("new-user-add", {you:user,reciver:id});
 
-function SignIn() {
-
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
   }
 
   return (
+
     <>
-      <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
-      <p>Do not violate the community guidelines or you will be banned for life!</p>
-    </>
-  )
+    
+    
+    
+    <div className="Chat">
+      {/* Left Side */}
+      <div className="Left-side-chat">
+        <LogoSearch />
+        <div className="Chat-container">
+          <h2>Chats</h2>
+          {JSON.stringify(userObject.followers)}
+      {
+      userObject.followers?.map(({username,_id,friends})=>{
+        return (            
+          <>
+          
+          <p onClick={()=>handleUserByChat(_id)} style={{color:"white",backgroundColor:"black",padding:"5px 10px"}}  >{username}</p>
+          {/* <p  onClick={()=>handleUserByChat(_id)}>{reciver}</p> */}
+          </>
+        )
+      })
+    } 
 
-}
+{/* 
+    {
+      chatUser.map(({you,reciver})=>{
+        
+      */}
+        {/* return(
+        <> */}
+           {/* {chats.map((chat) =>
+           
+           (  
+            
+              <div onClick={() =>setCurrentChat(chat)} ><p>{'chat'}</p></div>))} */}
+{/*             
+          
+          </> */}
+        {/* )
+      })
+    } */}
+        </div>
+      </div>
+      {/* Right Side */}
 
-function SignOut() {
-  return auth.currentUser && (
-    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
-  )
-}
-
-
-function ChatRoom() {
-  const dummy = useRef();
-  const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(25);
-
-  const [messages] = useCollectionData(query, { idField: 'id' });
-
-  const [formValue, setFormValue] = useState('');
-
-
-  const sendMessage = async (e) => {
-    e.preventDefault();
-
-    const { uid, photoURL } = auth.currentUser;
-
-    await messagesRef.add({
-      text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      uid,
-      photoURL
-    })
-
-    setFormValue('');
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  return (<>
-    <main>
-
-      {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-
-      <span ref={dummy}></span>
-
-    </main>
-
-    <form onSubmit={sendMessage}>
-
-      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
-
-      <button type="submit" disabled={!formValue}>
-
-      <img src='https://cdn-icons-png.flaticon.com/128/2550/2550207.png'></img></button>
-
-    </form>
-  </>)
-}
-
-
-function ChatMessage(props) {
-  const { text, uid, photoURL } = props.message;
-
-  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-
-  return (<>
-    <div className={`message ${messageClass}`}>
-      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
-      <p>{text}</p>
+       <div className="Right-side-chat">
+        <div style={{ width: "20rem", alignSelf: "flex-end" }}>
+          {/* <NavIcons /> */}
+        </div>
+        {/* <ChatBox
+          chat={currentChat}
+          
+          currentUser={user}
+          setSendMessage={setSendMessage}
+          receivedMessage={receivedMessage}
+        /> */}
+      </div> 
     </div>
-  </>)
-}
+    </>
 
+  );
+};
 
-export default App;
+export default Message;

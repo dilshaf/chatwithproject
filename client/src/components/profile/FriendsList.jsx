@@ -37,7 +37,7 @@ useEffect(() => {
     <article class="leaderboard__profile">
     <Avatar
       alt="Mark Zuckerberg"
-      src={`http://localhost:5000/uploads/${items.image}`}
+      src={`http://localhost:7000/uploads/${items.image}`}
       className="leaderboard__picture"
     />
       <span class="leaderboard__name" >{items.username}</span>

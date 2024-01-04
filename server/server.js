@@ -6,6 +6,8 @@ import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import router from './routes/authRoutes.js'
 import Postrouter from './routes/postRoutes.js'
+import ChatRoute from './routes/chatRoutes.js'
+import MessageRoutes from './routes/messageRoutes.js'
 
 // import router from './routes/postRoutes.js'
 import {dirname,join} from 'path'
@@ -40,6 +42,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/api/admin',router)
 app.use('/api/posts',Postrouter)
+app.use("/api/chats",ChatRoute)
+app.use('/api/message',MessageRoutes)
 app.use('/uploads',express.static(path.join(__dirname,'uploads')))
 app.use((err, req, res, next) => {
     console.error(err.stack);

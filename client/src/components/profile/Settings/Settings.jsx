@@ -66,7 +66,7 @@ function Settings() {
     console.log(formData,'dddddddd');
     try {
       
-      let response = await axios.put(`http://localhost:5000/api/admin/up/${localStorage.getItem('id')}`, formData);
+      let response = await axios.put(`http://localhost:7000/api/admin/up/${localStorage.getItem('id')}`, formData);
       if(response.data){
         successToast("updated");
       }
@@ -83,7 +83,7 @@ function Settings() {
     // alert(e.target.value)
     if(value === '') return alert('plese click anyone')
     try {
-      await axios.put('http://localhost:5000/api/admin/privacy',{postId,data:value})
+      await axios.put('http://localhost:7000/api/admin/privacy',{postId,data:value})
     } catch (error) {
       
     }
@@ -290,7 +290,7 @@ export default Settings;
 //     formData.append("privacy", isToggled ? "public" : "private");
 
 //     try {
-//       let response = await axios.put(`http://localhost:5000/api/admin/up/${localStorage.getItem('id')}`, formData);
+//       let response = await axios.put(`http://localhost:7000/api/admin/up/${localStorage.getItem('id')}`, formData);
 //       if (response.data) {
 //         successToast("updated");
 //       }
@@ -306,7 +306,7 @@ export default Settings;
 //   const handlePrivacy = async (postId, value) => {
 //     if (value === '') return alert('please click anyone');
 //     try {
-//       await axios.put('http://localhost:5000/api/admin/privacy', { postId, data: value });
+//       await axios.put('http://localhost:7000/api/admin/privacy', { postId, data: value });
 //     } catch (error) {
 //       console.log(error);
 //     }

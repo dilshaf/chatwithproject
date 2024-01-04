@@ -96,7 +96,7 @@
 
 //     try {
 //       const response = await axios.post(
-//         "http://localhost:5000/api/admin/register",
+//         "http://localhost:7000/api/admin/register",
 //         data
 //       );
 
@@ -413,7 +413,7 @@ export default function Example() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/register",
+        "http://localhost:7000/api/admin/register",
         data
       );
 

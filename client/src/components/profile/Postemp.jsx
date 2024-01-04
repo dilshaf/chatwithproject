@@ -28,7 +28,7 @@ const UserPost = ({refresh}) => {
   };
   const handleUpdatePost = async (postid) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/posts/put/${postid}`, {
+      const response = await axios.put(`http://localhost:7000/api/posts/put/${postid}`, {
         privacy,
         postid,
       });
@@ -63,7 +63,7 @@ console.log(data,"llllllllllllllllllllllllllllll");
         return;
       }
       let response = await axios.post(
-        "http://localhost:5000/api/posts/comment",
+        "http://localhost:7000/api/posts/comment",
         { userid, text: commentText, postid }
       );
       console.log(response, "commentresponse");
@@ -80,7 +80,7 @@ console.log(data,"llllllllllllllllllllllllllllll");
 
   const getPost=async(req,res)=>{
     try {
-      let response=await axios.get(`http://localhost:5000/api/posts/get/${localStorage.getItem("id")}`)
+      let response=await axios.get(`http://localhost:7000/api/posts/get/${localStorage.getItem("id")}`)
       console.log(response,"res");
       setData(response.data)
       setRefresh(!refresh);
@@ -121,7 +121,7 @@ console.log(data,"llllllllllllllllllllllllllllll");
           return;
         }
   
-        const response = await axios.post('http://localhost:5000/api/posts/like', { userid, postid })
+        const response = await axios.post('http://localhost:7000/api/posts/like', { userid, postid })
           
     
   
@@ -146,14 +146,14 @@ console.log(data,"llllllllllllllllllllllllllllll");
         data.map((items)=>{
           console.log(items,'itemskanan');
           
-          const shareUrl = `http://localhost:5000/api/posts/get/${localStorage.getItem("id")}`;
+          const shareUrl = `http://localhost:7000/api/posts/get/${localStorage.getItem("id")}`;
           console.log(shareUrl,'url');
           // const shareText = `Check out this post: ${items.description}`;;
           return(
            
             <div  className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md mt-8">
         <div className="flex items-center mb-4">
-          <img src={`http://localhost:5000/uploads/${details.image}`} alt="Profile Image" className="w-10 h-10 rounded-full mr-4" />
+          <img src={`http://localhost:7000/uploads/${details.image}`} alt="Profile Image" className="w-10 h-10 rounded-full mr-4" />
           
           <div>
             <h2 className="text-lg font-semibold">{details.username}</h2>
@@ -194,7 +194,7 @@ console.log(data,"llllllllllllllllllllllllllllll");
 
 
         </div>
-        <img src={`http://localhost:5000/uploads/${items.image}`} alt="Post Image" className="mb-4 rounded-lg w-full" />
+        <img src={`http://localhost:7000/uploads/${items.image}`} alt="Post Image" className="mb-4 rounded-lg w-full" />
         <div className="mb-4">
           <p className="text-gray-800">{items.description}</p>
           {/* <p>{items.privacy}</p> */}
@@ -268,7 +268,7 @@ console.log(details,'item');
        
            
             <div class="flex space-x-4 mb-4" style={{marginTop:"4rem"}}>
-            <img src={`http://localhost:5000/uploads/${details.image}`} alt="Profile Image" className="w-10 h-10 rounded-full mr-4" />
+            <img src={`http://localhost:7000/uploads/${details.image}`} alt="Profile Image" className="w-10 h-10 rounded-full mr-4" />
                 <div>
                 
   <h3 class="font-semibold">
@@ -312,7 +312,7 @@ console.log(details,'item');
      <div class="bg-white p-4 rounded-md shadow-md">
           
           <div class="flex space-x-4 mb-4">
-              {/* <img src={`http://localhost:5000/uploads/${items.profilepic}`} alt="Your Profile Pic" class="w-10 h-10 rounded-full"/> */}
+              {/* <img src={`http://localhost:7000/uploads/${items.profilepic}`} alt="Your Profile Pic" class="w-10 h-10 rounded-full"/> */}
               <input type="text" placeholder="Add your comment..."  value={commentText}
                     onChange={commentFunction} class="w-full border border-gray-300 p-2 rounded-md"/>  <SendIcon
                     onClick={() => handleCommentSubmit(items._id)}

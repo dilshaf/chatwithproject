@@ -16,16 +16,14 @@ export default function Basic() {
  
 
   const {obj} = useContext(AuthContext)
-  // const {refreshUseEffectMethod}=useContext(AuthContext)
   const [datas,setDatas]=useState([])
-  // console.log(refresh,'datas refresh');
 
   const { selectedPost } = useContext(AuthContext);
 
   
   const getPost=async(req,res)=>{
     try {
-      let response=await axios.get(`http://localhost:5000/api/posts/get/${localStorage.getItem("id")}`)
+      let response=await axios.get(`http://localhost:7000/api/posts/get/${localStorage.getItem("id")}`)
       console.log(response,"res");
       setDatas(response.data)
       
@@ -43,6 +41,7 @@ export default function Basic() {
     if (selectedPost) {
     
       response = selectedPost;
+      // set
       console.log(response,'selectedpost');
     } else {
     
@@ -55,7 +54,7 @@ export default function Basic() {
     }
 
     setData(response);
-    console.log(response, 'responseeeeeeeeeee');
+    obj.GetUser(response)
   };
 
   useEffect(() => {
@@ -85,7 +84,7 @@ console.log(data,'postlength');
         <Avatar
       alt="Mark Zuckerberg"
       style={{marginLeft:"1rem"}}
-      src={`http://localhost:5000/uploads/${data.profilepic || data.image}`}
+      src={`http://localhost:7000/uploads/${data.profilepic || data.image}`}
       className="leaderboard__picture"
     />
 			</div>
@@ -100,7 +99,7 @@ console.log(data,'postlength');
 			
 			<div class="actions">
      <Link to={"vdocall"}><button class="btn">videocall</button></Link> 
-				<Link to={'message'}><button class="btn">Message</button></Link>
+				{/* <Link to={'message'}><button class="btn">Message</button></Link> */}
        <Link to={"audio"}><button class="btn">AudioChat</button></Link> 
 			</div>
 		</div>
